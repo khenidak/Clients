@@ -10,6 +10,6 @@ RUN /app/gradlew build
 
 RUN cp /app/build/libs/mrp.war /usr/local/tomcat/webapps/
 
-EXPOSE 80
+EXPOSE 8080
 
 ENTRYPOINT catalina.sh run
