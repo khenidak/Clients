@@ -4,7 +4,7 @@ MAINTAINER juliens@microsoft.com
 
 WORKDIR /app
 
-COPY src/* /app/
+COPY src /app/
 
 RUN /app/gradlew build
 
