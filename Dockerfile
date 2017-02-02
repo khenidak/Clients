@@ -2,8 +2,14 @@ FROM tomcat:7-jre8
 
 MAINTAINER juliens@microsoft.com
 
-COPY drop/* /usr/local/tomcat/webapps/
+WORKDIR /app
 
-EXPOSE 8080
+COPY src/* /app/
+
+RUN /app/gradlew build
+
+RUN cp /app/build/libs/mrp.war /usr/local/tomcat/webapps/
+
+EXPOSE 80
 
 ENTRYPOINT catalina.sh run
