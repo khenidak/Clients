@@ -19,7 +19,7 @@ node {
       sh 'sed -i \'s/IDPRETAG/\'$((${BUILD_ID}-1))\'/g\' deploy/pumrpclientpredeploy.yaml'
       sh 'sed -i \'s/IDTAG/\'${BUILD_ID}\'/g\' deploy/updategw50.yaml'
       sh 'sed -i \'s/IDPRETAG/\'$((${BUILD_ID}-1))\'/g\' deploy/updategw50.yaml'
-      sh 'sed -i \'s/IDTAG/\'$((${BUILD_ID}-1))\'/g\' deploy/updategw100.yaml'
+      sh 'sed -i \'s/IDTAG/\'${BUILD_ID}\'/g\' deploy/updategw100.yaml'
       sh 'sed -i \'s/IDPRETAG/\'$((${BUILD_ID}-1))\'/g\' deploy/updategw100.yaml'
    } 
    stage('Deploy in Cluster') 
