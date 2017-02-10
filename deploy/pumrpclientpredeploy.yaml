@@ -8,8 +8,6 @@ clusters:
         deployable: partsunlimitedmrp/clients:IDPRETAG
         ports:
           webport: 8080/http
-        environment_variables:
-            MONGO_HOST: "database.pumrpdb.marathon.mesos"
       scale:
         cpu: 0.5       
         memory: 512MB
