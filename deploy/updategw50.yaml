@@ -1,0 +1,14 @@
+---
+name: pumrpclient
+kind: gateway
+internal: false
+deployed: true
+port: 40100/http
+sticky: null
+virtual_hosts:
+- pumrp.julien.work
+routes:
+  pumrpclient:IDPRETAG/pumrpclientIDPRETAG/pumrpclient:IDPRETAG/webport:
+    weight: 50%
+  pumrpclient:IDTAG/pumrpclientIDTAG/pumrpclient:IDTAG/webport:
+    weight: 50%

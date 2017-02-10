@@ -15,11 +15,17 @@ node {
    }
    stage('Prepare Breeds') 
    {
-      sh 'sed -i \'s/IDTAGA/\'${BUILD_ID}\'/g\' deploy/pumrpclient50.yaml'
-      sh 'sed -i \'s/IDTAGB/\'$((${BUILD_ID}-1))\'/g\' deploy/pumrpclient50.yaml'
+      sh 'sed -i \'s/IDTAG/\'${BUILD_ID}\'/g\' deploy/pumrpclientdeploy.yaml'
+      sh 'sed -i \'s/IDTAG/\'$((${BUILD_ID}-1))\'/g\' deploy/updategw50.yaml'
+      sh 'sed -i \'s/IDPRETAG/\'$((${BUILD_ID}-1))\'/g\' deploy/updategw50.yaml'
    } 
-   stage('Deploy 50') 
+   stage('Deploy in Cluster') 
    {
-       sh 'curl -v -X POST --data-binary @deploy/pumrpclient50.yaml -H "Content-Type: application/x-yaml" vamp.vamp.marathon.mesos:12061/api/v1/deployments'
+       sh 'curl -v -X POST --data-binary @deploy/pumrpclientdeploy.yaml -H "Content-Type: application/x-yaml" vamp.vamp.marathon.mesos:12061/api/v1/deployments'
+   }
+   stage('Move GW 50/50') 
+   {
+       input 'Do you approve deployment?'
+       sh 'curl -v -X PUT --data-binary @deploy/updategw50.yaml -H "Content-Type: application/x-yaml" vamp.vamp.marathon.mesos:12061/api/v1/gateways/pumrpclient'
    }
 }

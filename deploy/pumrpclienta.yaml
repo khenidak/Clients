@@ -1,0 +1,14 @@
+---
+name: pumrpclient:a
+clusters:
+  pumrpclienta:
+    services:
+      breed:
+        name: pumrpclient:a
+        deployable: partsunlimitedmrp/clients:IDTAGA
+        ports:
+          webport: 8080/http
+      scale:
+        cpu: 0.5       
+        memory: 512MB
+        instances: 1
