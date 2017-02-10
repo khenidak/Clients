@@ -39,5 +39,7 @@ node {
    stage('Undeploy Previous App') 
    {
        sh 'curl -v -X DELETE --data-binary @deploy/pumrpclientpredeploy.yaml -H "Content-Type: application/x-yaml" vamp.vamp.marathon.mesos:12061/api/v1/deployments/pumrpclient:$((${BUILD_ID}-1))'
+       sh 'curl -v -X DELETE -H "Content-Type: application/x-yaml" vamp.vamp.marathon.mesos:12061/api/v1/breeds/pumrpclient:$((${BUILD_ID}-1))'
+
    }
 }
