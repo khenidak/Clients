@@ -13,11 +13,14 @@ node {
       sh 'docker login --username=$USERNAME --password=$PASSWORD' 
       sh 'docker push partsunlimitedmrp/clients:${BUILD_ID}'
    }
-   stage('Prepare Breeds') 
+   stage('Prepare Scripts') 
    {
       sh 'sed -i \'s/IDTAG/\'${BUILD_ID}\'/g\' deploy/pumrpclientdeploy.yaml'
+      sh 'sed -i \'s/IDPRETAG/\'$((${BUILD_ID}-1))\'/g\' deploy/pumrpclientpredeploy.yaml'
       sh 'sed -i \'s/IDTAG/\'$((${BUILD_ID}-1))\'/g\' deploy/updategw50.yaml'
       sh 'sed -i \'s/IDPRETAG/\'$((${BUILD_ID}-1))\'/g\' deploy/updategw50.yaml'
+      sh 'sed -i \'s/IDTAG/\'$((${BUILD_ID}-1))\'/g\' deploy/updategw100.yaml'
+      sh 'sed -i \'s/IDPRETAG/\'$((${BUILD_ID}-1))\'/g\' deploy/updategw100.yaml'
    } 
    stage('Deploy in Cluster') 
    {
@@ -27,5 +30,14 @@ node {
    {
        input 'Do you approve deployment?'
        sh 'curl -v -X PUT --data-binary @deploy/updategw50.yaml -H "Content-Type: application/x-yaml" vamp.vamp.marathon.mesos:12061/api/v1/gateways/pumrpclient'
+   }
+   stage('Move Full') 
+   {
+       input 'Do you approve deployment?'
+       sh 'curl -v -X PUT --data-binary @deploy/updategw100.yaml -H "Content-Type: application/x-yaml" vamp.vamp.marathon.mesos:12061/api/v1/gateways/pumrpclient'
+   }
+   stage('Undeploy Previous App') 
+   {
+       sh 'curl -v -X DELETE --data-binary @deploy/pumrpclientpredeploy.yaml -H "Content-Type: application/x-yaml" vamp.vamp.marathon.mesos:12061/api/v1/deployments/pumrpclient:$((${BUILD_ID}-1))'
    }
 }

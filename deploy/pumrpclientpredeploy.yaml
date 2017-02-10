@@ -1,11 +1,11 @@
 ---
-name: pumrpclient:a
+name: pumrpclient:IDPRETAG
 clusters:
-  pumrpclienta:
+  pumrpclientIDPRETAG:
     services:
       breed:
-        name: pumrpclient:a
-        deployable: partsunlimitedmrp/clients:IDTAGA
+        name: pumrpclient:IDPRETAG
+        deployable: partsunlimitedmrp/clients:IDPRETAG
         ports:
           webport: 8080/http
       scale:
