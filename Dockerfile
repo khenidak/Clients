@@ -5,11 +5,9 @@ MAINTAINER juliens@microsoft.com
 WORKDIR /app
 
 COPY src /app/
+COPY ./run.sh /app
 
-RUN /app/gradlew build
-
-RUN cp /app/build/libs/mrp.war /usr/local/tomcat/webapps/
 
 EXPOSE 8080
 
-ENTRYPOINT catalina.sh run
+ENTRYPOINT /app/run.sh
