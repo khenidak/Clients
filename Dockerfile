@@ -8,6 +8,6 @@ COPY src /app/
 COPY ./run.sh /app
 
 
-EXPOSE 8080
+EXPOSE 8090
 
 ENTRYPOINT /app/run.sh

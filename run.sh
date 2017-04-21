@@ -20,6 +20,7 @@ cat /app/Web/js/serverconfig.js
 /app/gradlew build
 cp /app/build/libs/mrp.war /usr/local/tomcat/webapps/
 
-
+sed -i 's/8080/8090/g' /usr/local/tomcat/conf/server.xml
 catalina.sh run
+
 
